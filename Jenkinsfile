@@ -16,8 +16,15 @@ pipeline {
         DB_HOST = credentials('DB_HOST')
         DB_PORT = credentials('DB_PORT')
     }
-
+    
     stages {
+        stage('Cleanup Workspace') {
+            steps {
+                // Clean up the workspace to avoid git clone errors
+                deleteDir()
+            }
+        }
+
         stage('Git Clone') {
             steps {
                 // GitHub에서 소스 코드 클론
@@ -37,6 +44,7 @@ pipeline {
                 """
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 sh 'sudo docker build -t ${DOCKER_IMAGE_NAME} .'
@@ -47,6 +55,7 @@ pipeline {
                 sh 'sudo docker save -o ${DOCKER_IMAGE_NAME}.tar ${DOCKER_IMAGE_NAME}'
             }
         }
+
         stage('Copy Docker Image to Target EC2') {
             steps {
                 sshagent(credentials: ['aws_key']) {
@@ -57,6 +66,7 @@ pipeline {
                 }
             }
         }
+
         stage('Load Docker Image and Run Container on Target EC2') {
             steps {
                 sshagent(credentials: ['aws_key']) {
