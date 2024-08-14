@@ -1,7 +1,7 @@
 FROM python:alpine
 # 테스트
 RUN apk update
-
+#확인
 
 WORKDIR /app
 COPY requirements.txt .
