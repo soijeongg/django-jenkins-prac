@@ -72,18 +72,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'restboard.wsgi.application'
 
-
+from decouple import config
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
-        'USER': 'root',
-        'PASSWORD': 'password1234',
-        'HOST': 'database-1.cqfhpl0935hl.ap-northeast-2.rds.amazonaws.com',
-        'PORT': '3306',
+        'ENGINE':  config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
