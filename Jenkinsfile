@@ -54,6 +54,7 @@ pipeline {
                                 --build-arg DATABASE_USERNAME=${env.DB_USER} \
                                 --build-arg DATABASE_PASSWORD=${env.DB_PASSWORD} \
                                 --build-arg PORT=${env.PORT} \
+                                --build-arg TARGET_EC2_IP=${env.TARGET_EC2_IP} \
                                 -t ${env.DOCKER_IMAGE_NAME} .
                     """
             }
