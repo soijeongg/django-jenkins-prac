@@ -47,12 +47,12 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'sudo docker build -t ${DOCKER_IMAGE_NAME} .'
+                sh 'docker build -t ${DOCKER_IMAGE_NAME} .'
             }
         }
         stage('Save Docker Image as TAR') {
             steps {
-                sh 'sudo docker save -o ${DOCKER_IMAGE_NAME}.tar ${DOCKER_IMAGE_NAME}'
+                sh 'docker save -o ${DOCKER_IMAGE_NAME}.tar ${DOCKER_IMAGE_NAME}'
             }
         }
 
@@ -72,11 +72,11 @@ pipeline {
                 sshagent(credentials: ['aws_key']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@${TARGET_EC2_IP} << EOF
-                    sudo docker load -i /home/ubuntu/${DOCKER_IMAGE_NAME}.tar
-                    sudo docker stop ${CONTAINER_NAME} || true
-                    sudo docker rm ${CONTAINER_NAME} || true
-                    sudo docker run -d --name ${CONTAINER_NAME} -p ${PORT}:${PORT} ${DOCKER_IMAGE_NAME}
-                    EOF
+                    docker load -i /home/ubuntu/${DOCKER_IMAGE_NAME}.tar
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
+                    docker run -d --name ${CONTAINER_NAME} -p ${PORT}:${PORT} ${DOCKER_IMAGE_NAME}
+                    
                     """
                 }
             }
