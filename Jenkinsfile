@@ -47,7 +47,15 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ${DOCKER_IMAGE_NAME} .'
+                sh """
+                    docker build --build-arg DATABASE_HOST=${env.DB_HOST} \
+                                --build-arg DATABASE_PORT=${env.DB_PORT} \
+                                --build-arg DATABASE_NAME=${env.DB_NAME} \
+                                --build-arg DATABASE_USERNAME=${env.DB_USER} \
+                                --build-arg DATABASE_PASSWORD=${env.DB_PASSWORD} \
+                                --build-arg PORT=${env.PORT} \
+                                -t ${env.DOCKER_IMAGE_NAME} .
+                    """
             }
         }
         stage('Save Docker Image as TAR') {
