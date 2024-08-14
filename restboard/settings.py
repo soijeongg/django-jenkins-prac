@@ -22,10 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '1)5$cl)8!&djso_)xcwyr5wle!y46a9j6+c=6v(h7g=s6_w*il'
 
+from decouple import config
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ config('TARGET_EC2_IP'), 'localhost']
 
 
 # Application definition
@@ -72,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'restboard.wsgi.application'
 
-from decouple import config
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
