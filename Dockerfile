@@ -1,6 +1,18 @@
 # 베이스 이미지 설정
 FROM python:alpine
 
+RUN apk update && apk add --no-cache \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    openssl-dev \
+    mariadb-connector-c-dev \
+    postgresql-dev \
+    python3-dev \
+    build-base \
+    jpeg-dev \
+    zlib-dev
+
 # 빌드 인자 설정
 ARG DATABASE_HOST
 ARG DATABASE_PORT
