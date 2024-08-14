@@ -40,4 +40,4 @@ ENV DATABASE_PASSWORD=${DATABASE_PASSWORD}
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 컨테이너 시작 명령어
-CMD ["python", "manage.py", "runserver", "0.0.0.0:$PORT"]
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:$PORT"]
