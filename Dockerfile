@@ -1,7 +1,7 @@
 FROM python:alpine
 # 테스트
 RUN apk update
-#확인
+
 ARG DATABASE_HOST
 ARG DATABASE_PORT
 ARG DATABASE_NAME
